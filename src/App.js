@@ -1,10 +1,10 @@
 import React from "react";
-import Fire from "./Component/Firebase";
+import Taobal from "./Component/Taobal/Taobal";
 
 const App = () => {
   return (
     <div>
-      <Fire />
+      <Taobal />
     </div>
   );
 };

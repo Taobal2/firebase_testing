@@ -1,8 +1,8 @@
-import firebase from "firebase";
+import firebase from "firebase/compat";
 import "firebase/auth";
 import "firebase/firestore";
 
-export const app = firebase.initializeApp({
+export const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyD9h1HOFqE9Mvoc33rYijbD7fT0bMAjNn8",
   authDomain: "database-class-3f611.firebaseapp.com",
   projectId: "database-class-3f611",
