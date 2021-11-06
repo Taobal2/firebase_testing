@@ -50,49 +50,51 @@ const Taobal = () => {
   }, []);
 
   return (
-    <MenuContainer>
-      <Container>
-        <Wrapper>
-          <Input
-            placeholder="Enter task"
-            value={task}
-            onChange={(e) => {
-              setTask(e.target.value);
-            }}
-          />
-          <Button onClick={pushData}>Add Task</Button>
-        </Wrapper>
-      </Container>
-
-      <MainCard>
+    <Container>
+      <Input
+        placeholder="Enter task"
+        value={task}
+        onChange={(e) => {
+          setTask(e.target.value);
+        }}
+      />
+      <Button onClick={pushData}>Add Task</Button>
+      <Wrapper>
         {dataBase?.map((props, i) => (
           <Card key={i}>
-            {props.isDone ? <Color bg="green" /> : <Color bg="red" />}
-            <Title>{props.taskname}</Title>
-            <Button
-              onClick={() => {
-                updateData(props.id);
-                onDone();
-                console.log(props.id);
-              }}
-            >
-              Done
-            </Button>
-            <Button
-              onClick={() => {
-                deleteData(props.id);
-              }}
-            >
-              Delete
-            </Button>
+            {done ? <Color bg="green" /> : <Color bg="grey" />}
+            <Title>{props.taskname}</Title>{" "}
+            <Buttons>
+              <Button
+                onClick={() => {
+                  onDone();
+                  updateData(props.id);
+                  console.log(props.id);
+                }}
+              >
+                Done
+              </Button>
+              <Button
+                onClick={() => {
+                  deleteData(props.id);
+                  console.log(props.id);
+                }}
+              >
+                Delete
+              </Button>
+            </Buttons>
           </Card>
         ))}
-      </MainCard>
-    </MenuContainer>
+      </Wrapper>
+    </Container>
   );
 };
 
 export default Taobal;
+
+const Buttons = styled.div`
+  display: flex;
+`;
 
 const Color = styled.div`
   width: 100%;
@@ -107,17 +109,10 @@ const Title = styled.div`
   font-size: 20px;
 `;
 
-const MainCard = styled.div`
-  dsplay: flex;
-  flex-wrap: wrap;
-  padding-top: 50px;
-  justify-content: center;
-`;
-
 const Card = styled.div`
   margin: 10px;
-  width: 300px;
-  min-height: 200px;
+  width: 400px;
+  height: 100%;
   overflow: hidden;
   border-radius: 5px;
   background-color: antiquewhite;
@@ -130,11 +125,11 @@ const Card = styled.div`
 `;
 
 const Button = styled.div`
-  width: 250px;
+  width: 180px;
   height: 50px;
   color: white;
   background-color: blue;
-  margin-top: 20px;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -149,30 +144,25 @@ const Button = styled.div`
   }
 `;
 
-const MenuContainer = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const Container = styled.div`
   width: 100%;
   min-height: 20vh;
-  // height: 100%;
-  background-color: rgba(255, 255, 255, 0.6);
-`;
-const Wrapper = styled.div`
-  width: 100%;
   height: 100%;
-  // min-height: 30vh;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   padding-top: 50px;
+  background-color: red;
+`;
+const Wrapper = styled.div`
+  width: 100%;
+  min-height: 60vh;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
 `;
 
 const Input = styled.input`
