@@ -4,11 +4,12 @@ import { firebaseApp } from "../../myFirebase";
 import firebase from "firebase/compat";
 
 const Taobal = () => {
-  const [dataBase, setDataBase] = useState([]);
+  const [dataBase, setdataBase] = useState([]);
   const [task, setTask] = useState("");
+  const [isDone, setIsDone] = useState(false);
   const [done, setDone] = useState(false);
 
-  const onDone = async () => {
+  const onDone = () => {
     setDone(!done);
   };
 
@@ -21,7 +22,7 @@ const Taobal = () => {
         snapshot.forEach((doc) => {
           file.push({ ...doc.data(), id: doc.id });
         });
-        setDataBase(file);
+        setdataBase(file);
       });
   };
 
@@ -41,7 +42,7 @@ const Taobal = () => {
   };
 
   const deleteData = async (id) => {
-    await firebaseApp.firestore().collection("todo").doc(id).delete();
+    await firebaseApp.firestore().collection("todo").doc(id).delete({});
   };
 
   useEffect(() => {
@@ -51,38 +52,31 @@ const Taobal = () => {
 
   return (
     <Container>
-      <Input
-        placeholder="Enter task"
-        value={task}
-        onChange={(e) => {
-          setTask(e.target.value);
-        }}
-      />
+      <Input placeholder="Enter your task" />
       <Button onClick={pushData}>Add Task</Button>
       <Wrapper>
         {dataBase?.map((props, i) => (
           <Card key={i}>
-            {done ? <Color bg="green" /> : <Color bg="grey" />}
-            <Title>{props.taskname}</Title>{" "}
-            <Buttons>
+            {props.isDone ? <Color bg="green" /> : <Color bg="red" />}
+            <TaskName>{props.taskname}</TaskName>
+            <Register>
               <Button
                 onClick={() => {
                   onDone();
                   updateData(props.id);
-                  console.log(props.id);
                 }}
               >
                 Done
               </Button>
+
               <Button
                 onClick={() => {
                   deleteData(props.id);
-                  console.log(props.id);
                 }}
               >
                 Delete
               </Button>
-            </Buttons>
+            </Register>
           </Card>
         ))}
       </Wrapper>
@@ -92,84 +86,66 @@ const Taobal = () => {
 
 export default Taobal;
 
-const Buttons = styled.div`
+const Register = styled.div`
   display: flex;
-`;
-
-const Color = styled.div`
-  width: 100%;
-  height: 150px;
-  background-color: ${({ bg }) => bg};
-`;
-
-const Title = styled.div`
-  flex: 1;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 20px;
 `;
 
 const Card = styled.div`
-  margin: 10px;
-  width: 400px;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 5px;
-  background-color: antiquewhite;
+  width: 350px;
+  height: 300px;
+  background-color: blue;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  margin: 10px;
+`;
+
+const TaskName = styled.div``;
+
+const Color = styled.div`
+  width: 100%;
+  height: 180px;
+  background-color: ${({ bg }) => bg};
+  margin-bottom: 15px;
+`;
+
+const Input = styled.input`
+  width: 250px;
+  height: 40px;
+  outline: none;
+  border: 0;
+  font-size: 15px;
+  padding-left: 5px;
 `;
 
 const Button = styled.div`
-  width: 180px;
-  height: 50px;
-  color: white;
-  background-color: blue;
-  margin: 10px;
+  width: 100px;
+  height: 40px;
+  background-color: coral;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
-  border-radius: 5px;
-  transiton: all 400ms;
-  transform: scale (1);
-
-  :hover {
-    transform: scale(0.97);
-    cursor: pointer;
-  }
+  margin: 20px 15px;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
   width: 100%;
-  min-height: 20vh;
+  min-height: 100vh;
   height: 100%;
+  background-color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 50px;
-  background-color: red;
-`;
-const Wrapper = styled.div`
-  width: 100%;
-  min-height: 60vh;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
+  padding-top: 80px;
+  color: white;
 `;
 
-const Input = styled.input`
-  outline: none;
-  border: 1px solid lightgray;
-  width: 300px;
-  height: 50px;
-  border-radius: 5px;
-  padding-left: 10px;
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+  flex-wrap: wrap;
 `;
