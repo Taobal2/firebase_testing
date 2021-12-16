@@ -32,6 +32,7 @@ const Taobal = () => {
       isDone: false,
       time: firebase.firestore.FieldValue.serverTimestamp(),
     });
+
     setTask("");
   };
 
@@ -93,6 +94,7 @@ const Register = styled.div`
 const Card = styled.div`
   width: 350px;
   height: 300px;
+  border-radius: 5px;
   background-color: blue;
   display: flex;
   flex-direction: column;
@@ -105,6 +107,7 @@ const TaskName = styled.div``;
 const Color = styled.div`
   width: 100%;
   height: 180px;
+  border-radius: 5px 5px 0 0;
   background-color: ${({ bg }) => bg};
   margin-bottom: 15px;
 `;
@@ -112,10 +115,11 @@ const Color = styled.div`
 const Input = styled.input`
   width: 250px;
   height: 40px;
+  border-radius: 5px;
   outline: none;
   border: 0;
   font-size: 15px;
-  padding-left: 5px;
+  padding-left: 10px;
 `;
 
 const Button = styled.div`
@@ -127,6 +131,7 @@ const Button = styled.div`
   align-items: center;
   margin: 20px 15px;
   cursor: pointer;
+  border-radius: 5px;
 `;
 
 const Container = styled.div`
